@@ -243,35 +243,7 @@ struct Search : View {
             
             dishScroll()
             
-            /*
-            ScrollView(.vertical) {
-                // make a scroll of dish cards
-                DishInput(title: "pasta")
-            }
-            //.padding(.horizontal, 25)
-            .frame(width: .infinity, height: 200)
-            */
-            
             addDishButton()
-            
-            // add dish button
-            /*
-            Button(action: {print("Implement add dish button")}, label: {
-                Text("+ Add Dish")
-                    .font(.custom("Typo Round Regular Demo", size: 25))
-                    .foregroundColor(Color("coffee"))
-                
-            })
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 10)
-            .background(
-                RoundedRectangle(cornerRadius: 8.0)
-                    .foregroundColor(.white)
-                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 5)
-            )
-            */
-            
             
             // ingredients subheading
             HStack {
@@ -286,35 +258,8 @@ struct Search : View {
             }
             
             ingScroll()
-            // another scroll of ingredients
-            /*
-            ScrollView(.vertical) {
-                // make a scroll of dish cards
-                IngInput(title: "tomato")
-            }
-            //.padding(.horizontal, 25)
-            .frame(width: .infinity, height: 220)
-            */
-            
             
             addIngButton()
-            // add ingredient button
-            /*
-            Button(action: {print("Implement add ingredient button")}, label: {
-                Text("+ Add Ingredient")
-                    .font(.custom("Typo Round Regular Demo", size: 25))
-                    .foregroundColor(Color("coffee"))
-                
-            })
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 10)
-            .background(
-                RoundedRectangle(cornerRadius: 8.0)
-                    .foregroundColor(.white)
-                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 5)
-            )
-             */
             
             Spacer()
                 .frame(height: 15)
@@ -338,7 +283,6 @@ struct Search : View {
             
             Spacer()
             
-            
         }
         .padding(.horizontal, 25)
         
@@ -346,8 +290,6 @@ struct Search : View {
             Spacer()
             NavBar()
         }
-        
-        
     }
     
         

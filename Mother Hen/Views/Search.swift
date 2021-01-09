@@ -173,23 +173,39 @@ struct ingScroll : View {
 
 
 struct addDishButton : View {
+    @State private var addDish = false
+    @Binding var show: Bool
+    
     var body : some View {
-        Button(action: {print("Implement add dish button")}, label: {
-            Text("+ Add Dish")
-                .font(.custom("Typo Round Regular Demo", size: 25))
-                .foregroundColor(Color("coffee"))
+        ZStack {
+            Button(action: {
+                    //print("Implement add dish button")
+                self.addDish.toggle()
+                self.show.toggle()
+                
+            }, label: {
+                Text("+ Add Dish")
+                    .font(.custom("Typo Round Regular Demo", size: 25))
+                    .foregroundColor(Color("coffee"))
+                
+            })
+            .frame(maxWidth: .infinity)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
+            .background(
+                RoundedRectangle(cornerRadius: 8.0)
+                    .foregroundColor(.white)
+                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 5)
+            )
             
-        })
-        .frame(maxWidth: .infinity)
-        .padding(.horizontal, 10)
-        .padding(.vertical, 10)
-        .background(
-            RoundedRectangle(cornerRadius: 8.0)
-                .foregroundColor(.white)
-                .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 5)
-        )
+            //addDishView(show: $addDish)
+        }
+        
+        
+        
     }
 }
+
 
 
 struct addIngButton : View {
@@ -213,6 +229,11 @@ struct addIngButton : View {
 
 
 struct Search : View {
+    @State private var addDish = false
+    
+    // the query model
+    @ObservedObject var recipeViewModel: RecipeViewModel
+    
   var body : some View {
     ZStack {
         // background
@@ -224,10 +245,8 @@ struct Search : View {
                 Text("Search")
                     .font(.custom("Typo Round Regular Demo", size: 45))
                     .foregroundColor(Color("coffee"))
-                    //.padding(.leading, 25)
                 Spacer()
             }
-            //.padding(.top, -50)
             
             // subheading
             HStack {
@@ -243,7 +262,7 @@ struct Search : View {
             
             dishScroll()
             
-            addDishButton()
+            addDishButton(show: $addDish)
             
             // ingredients subheading
             HStack {
@@ -290,6 +309,8 @@ struct Search : View {
             Spacer()
             NavBar()
         }
+        
+        addDishView(show: $addDish, recipeViewModel: self.recipeViewModel)
     }
     
         
@@ -299,6 +320,6 @@ struct Search : View {
 
 struct SearchPreview : PreviewProvider {
     static var previews: some View {
-        Search()
+        Search(recipeViewModel: RecipeViewModel())
     }
 }

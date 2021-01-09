@@ -173,15 +173,21 @@ struct ingScroll : View {
 
 
 struct addDishButton : View {
-    @State private var addDish = false
+    // connects to addDishInput
+    //@State private var addDish = false
+    
+    
+    // connects to Search
     @Binding var show: Bool
+    //@Binding var hide: Bool
     
     var body : some View {
         ZStack {
             Button(action: {
                     //print("Implement add dish button")
-                self.addDish.toggle()
+                //self.addDish.toggle()
                 self.show.toggle()
+                //self.hide.toggle()
                 
             }, label: {
                 Text("+ Add Dish")
@@ -199,10 +205,9 @@ struct addDishButton : View {
             )
             
             //addDishView(show: $addDish)
+            
+            
         }
-        
-        
-        
     }
 }
 
@@ -230,6 +235,9 @@ struct addIngButton : View {
 
 struct Search : View {
     @State private var addDish = false
+    
+    //@Binding var hide : Bool
+    //@State var hide = true
     
     // the query model
     @ObservedObject var recipeViewModel: RecipeViewModel
@@ -310,7 +318,10 @@ struct Search : View {
             NavBar()
         }
         
-        addDishView(show: $addDish, recipeViewModel: self.recipeViewModel)
+        if addDish {
+            
+            addDishView(show: $addDish, recipeViewModel: self.recipeViewModel)
+        }
     }
     
         

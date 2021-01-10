@@ -27,4 +27,8 @@ class RecipeViewModel : ObservableObject {
     func getDishArray() -> Array<Dish> {
         return self.queryModel.getDishArray()
     }
+    
+    func getIngArray() -> Array<Ingredient> {
+        return self.queryModel.getIngArray()
+    }
 }

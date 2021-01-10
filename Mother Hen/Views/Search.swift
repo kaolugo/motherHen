@@ -171,10 +171,18 @@ struct dishScroll : View {
 
 
 struct ingScroll : View {
+    @StateObject var recipeViewModel: RecipeViewModel
+    
     var body : some View {
         ScrollView(.vertical) {
-            // make a scroll of dish cards
-            IngInput(title: "tomato")
+            VStack {
+                let ingredients = self.recipeViewModel.getIngArray()
+                
+                ForEach(0 ..< ingredients.count, id: \.self) { ingredient in
+                    IngInput(title: ingredients[ingredient].name)
+                }
+ 
+            }
         }
         //.padding(.horizontal, 25)
         .frame(width: .infinity, height: 220)
@@ -291,7 +299,7 @@ struct Search : View {
                 Spacer()
             }
             
-            ingScroll()
+            ingScroll(recipeViewModel: recipeViewModel)
             
             addIngButton(show: $addIngredient)
             

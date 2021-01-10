@@ -62,7 +62,7 @@ struct Query {
         return self.dishQueries
     }
     
-    func getIngAarray() -> [Ingredient] {
+    func getIngArray() -> [Ingredient] {
         return self.ingQueries
     }
     

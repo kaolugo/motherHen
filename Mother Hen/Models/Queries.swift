@@ -15,6 +15,7 @@ import Foundation
 struct Dish : Decodable {
     var name: String
     var toggle: Bool
+    //var id = UUID()
     
     init (name: String) {
         self.name = name
@@ -57,6 +58,13 @@ struct Query {
         self.ingQueries.append(Ingredient(name: ing))
     }
     
+    func getDishArray () -> [Dish] {
+        return self.dishQueries
+    }
+    
+    func getIngAarray() -> [Ingredient] {
+        return self.ingQueries
+    }
     
 }
 

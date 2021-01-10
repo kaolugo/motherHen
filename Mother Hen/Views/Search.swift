@@ -149,12 +149,22 @@ struct IngInput : View {
 
 
 struct dishScroll : View {
+    @StateObject var recipeViewModel: RecipeViewModel
+    
+    
     var body : some View {
         ScrollView(.vertical) {
             // make a scroll of dish cards
-            DishInput(title: "pasta")
+            VStack {
+                let dishes = self.recipeViewModel.getDishArray()
+                
+                ForEach(0 ..< dishes.count, id: \.self) { dish in
+                    DishInput(title: dishes[dish].name)
+                }
+ 
+            }
+            
         }
-        //.padding(.horizontal, 25)
         .frame(width: .infinity, height: 200)
     }
 }
@@ -179,43 +189,39 @@ struct addDishButton : View {
     
     // connects to Search
     @Binding var show: Bool
-    //@Binding var hide: Bool
     
     var body : some View {
-        ZStack {
-            Button(action: {
-                    //print("Implement add dish button")
-                //self.addDish.toggle()
-                self.show.toggle()
-                //self.hide.toggle()
-                
-            }, label: {
-                Text("+ Add Dish")
-                    .font(.custom("Typo Round Regular Demo", size: 25))
-                    .foregroundColor(Color("coffee"))
-                
-            })
-            .frame(maxWidth: .infinity)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 10)
-            .background(
-                RoundedRectangle(cornerRadius: 8.0)
-                    .foregroundColor(.white)
-                    .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 5)
-            )
+        Button(action: {
+            self.show.toggle()
+        }, label: {
+            Text("+ Add Dish")
+                .font(.custom("Typo Round Regular Demo", size: 25))
+                .foregroundColor(Color("coffee"))
+            
+        })
+        .frame(maxWidth: .infinity)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 10)
+        .background(
+            RoundedRectangle(cornerRadius: 8.0)
+                .foregroundColor(.white)
+                .shadow(color: Color.black.opacity(0.2), radius: 3, x: 0, y: 5)
+        )
             
             //addDishView(show: $addDish)
-            
-            
-        }
     }
 }
 
 
 
 struct addIngButton : View {
+    @Binding var show: Bool
+    
     var body : some View {
-        Button(action: {print("Implement add ingredient button")}, label: {
+        
+        Button(action: {
+            self.show.toggle()
+        }, label: {
             Text("+ Add Ingredient")
                 .font(.custom("Typo Round Regular Demo", size: 25))
                 .foregroundColor(Color("coffee"))
@@ -235,6 +241,7 @@ struct addIngButton : View {
 
 struct Search : View {
     @State private var addDish = false
+    @State private var addIngredient = false
     
     //@Binding var hide : Bool
     //@State var hide = true
@@ -268,7 +275,7 @@ struct Search : View {
                 Spacer()
             }
             
-            dishScroll()
+            dishScroll(recipeViewModel: recipeViewModel)
             
             addDishButton(show: $addDish)
             
@@ -286,7 +293,7 @@ struct Search : View {
             
             ingScroll()
             
-            addIngButton()
+            addIngButton(show: $addIngredient)
             
             Spacer()
                 .frame(height: 15)
@@ -319,8 +326,11 @@ struct Search : View {
         }
         
         if addDish {
-            
             addDishView(show: $addDish, recipeViewModel: self.recipeViewModel)
+        }
+        
+        if addIngredient {
+            addIngView(show: $addIngredient, recipeViewModel: self.recipeViewModel)
         }
     }
     

@@ -17,9 +17,14 @@ class RecipeViewModel : ObservableObject {
     
     func addDish(dish: String) {
         self.queryModel.addDish(dish: dish)
+        print(self.queryModel.dishQueries)
     }
     
     func addIngredient(ing: String) {
         self.queryModel.addIngredient(ing: ing)
+    }
+    
+    func getDishArray() -> Array<Dish> {
+        return self.queryModel.getDishArray()
     }
 }

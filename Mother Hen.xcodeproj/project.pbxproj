@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6F2823D525A8F892009D7776 /* AddQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2823D425A8F892009D7776 /* AddQuery.swift */; };
 		6F2823DD25AADF51009D7776 /* EditQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2823DC25AADF51009D7776 /* EditQuery.swift */; };
+		6F2823E225AC0850009D7776 /* Results.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F2823E125AC0850009D7776 /* Results.swift */; };
 		6F6E9D6025A81F3100E28EEE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6E9D5F25A81F3100E28EEE /* AppDelegate.swift */; };
 		6F6E9D6225A81F3100E28EEE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6E9D6125A81F3100E28EEE /* SceneDelegate.swift */; };
 		6F6E9D6425A81F3100E28EEE /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6E9D6325A81F3100E28EEE /* ContentView.swift */; };
@@ -54,6 +55,7 @@
 /* Begin PBXFileReference section */
 		6F2823D425A8F892009D7776 /* AddQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddQuery.swift; sourceTree = "<group>"; };
 		6F2823DC25AADF51009D7776 /* EditQuery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditQuery.swift; sourceTree = "<group>"; };
+		6F2823E125AC0850009D7776 /* Results.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Results.swift; sourceTree = "<group>"; };
 		6F6E9D5C25A81F3100E28EEE /* Mother Hen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Mother Hen.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6F6E9D5F25A81F3100E28EEE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6F6E9D6125A81F3100E28EEE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				6F6E9DB325A8225B00E28EEE /* Search.swift */,
 				6F2823D425A8F892009D7776 /* AddQuery.swift */,
 				6F2823DC25AADF51009D7776 /* EditQuery.swift */,
+				6F2823E125AC0850009D7776 /* Results.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				6F6E9DAE25A8201E00E28EEE /* Queries.swift in Sources */,
 				6F6E9D9425A81FAE00E28EEE /* APIService.swift in Sources */,
 				6F2823D525A8F892009D7776 /* AddQuery.swift in Sources */,
+				6F2823E225AC0850009D7776 /* Results.swift in Sources */,
 				6F6E9DA625A8200A00E28EEE /* Recipe.swift in Sources */,
 				6F2823DD25AADF51009D7776 /* EditQuery.swift in Sources */,
 				6F6E9DB425A8225B00E28EEE /* Search.swift in Sources */,

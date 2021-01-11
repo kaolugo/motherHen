@@ -102,8 +102,16 @@ struct Query {
     
     mutating func removeIng(index: Int) {
         self.ingQueries.remove(at: index)
-        print("removal")
-        print(ingQueries)
+    }
+    
+    mutating func toggleDish(index: Int) {
+        self.dishQueries[index].toggle.toggle()
+        print("toggled")
+        print(dishQueries)
+    }
+    
+    mutating func toggleIngredient(index: Int) {
+        self.ingQueries[index].toggle.toggle()
     }
 }
 

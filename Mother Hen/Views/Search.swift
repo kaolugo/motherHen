@@ -53,6 +53,53 @@ struct NavBar : View {
 }
 
 
+struct ToggleDish : View {
+    @State private var didTap = false
+    @State var index : Int
+    
+    @StateObject var recipeViewModel: RecipeViewModel
+    
+    var body : some View {
+        Button(action: {
+            self.recipeViewModel.toggleDish(index: index)
+            self.didTap.toggle()
+            
+        }, label: {
+            Image(systemName: "xmark")
+                .font(.system(size: 23, weight: .bold))
+                .foregroundColor(didTap ? Color.white : Color("slate"))
+        })
+        .padding(6)
+        .background(
+            RoundedRectangle(cornerRadius: 6.0)
+                .foregroundColor(.white))
+    }
+}
+
+
+struct ToggleIngredient : View {
+    @State private var didTap = false
+    @State var index : Int
+    
+    @StateObject var recipeViewModel: RecipeViewModel
+    
+    var body : some View {
+        Button(action: {
+            self.recipeViewModel.toggleIngredient(index: index)
+            self.didTap.toggle()
+        }, label: {
+            Image(systemName: "xmark")
+                .font(.system(size: 23, weight: .bold))
+                .foregroundColor(didTap ? Color.white : Color("slate"))
+        })
+        .padding(6)
+        .background(
+            RoundedRectangle(cornerRadius: 6.0)
+                .foregroundColor(.white))
+    }
+}
+
+
 struct DishInput : View {
     //var title: String
     @Binding var show: Bool
@@ -84,17 +131,7 @@ struct DishInput : View {
                     .foregroundColor(.white)
             )
             
-            
-            // toggle button
-            Button(action: {print("implement toggle function")}, label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 23, weight: .bold))
-                    .foregroundColor(Color("slate"))
-            })
-            .padding(6)
-            .background(
-                RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.white))
+            ToggleDish(index: index, recipeViewModel: recipeViewModel)
         }
         
         
@@ -140,15 +177,7 @@ struct IngInput : View {
             
             
             // toggle button
-            Button(action: {print("implement toggle function")}, label: {
-                Image(systemName: "xmark")
-                    .font(.system(size: 23, weight: .bold))
-                    .foregroundColor(Color("slate"))
-            })
-            .padding(6)
-            .background(
-                RoundedRectangle(cornerRadius: 6.0)
-                    .foregroundColor(.white))
+            ToggleIngredient(index: index, recipeViewModel: recipeViewModel)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 6)

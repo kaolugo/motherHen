@@ -64,4 +64,12 @@ class RecipeViewModel : ObservableObject {
     func removeIng(index: Int) {
         self.queryModel.removeIng(index: index)
     }
+    
+    func toggleDish(index: Int) {
+        self.queryModel.toggleDish(index: index)
+    }
+    
+    func toggleIngredient(index: Int) {
+        self.queryModel.toggleIngredient(index: index)
+    }
 }

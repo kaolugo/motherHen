@@ -12,7 +12,7 @@ import Foundation
 
 
 // Dish that the user would like to cook
-struct Dish : Decodable {
+struct Dish : Decodable, Equatable {
     var name: String
     var toggle: Bool
     //var id = UUID()
@@ -25,7 +25,7 @@ struct Dish : Decodable {
 
 
 // Ingredient that is available to the user
-struct Ingredient : Decodable {
+struct Ingredient : Decodable, Equatable {
     var name: String
     var toggle: Bool
     
@@ -43,19 +43,24 @@ struct Query {
     // list of ingredients that the user has available
     var ingQueries: [Ingredient]
     
+    
+    
     init() {
         dishQueries = []
+        
         ingQueries = []
     }
     
     // adds new dish to the list of queries
     mutating func addDish (dish: String) {
-        self.dishQueries.append(Dish(name: dish))
+        //dish = dish.lowercased()
+        self.dishQueries.append(Dish(name: dish.lowercased()))
     }
     
     // adds new ingredient to the list of queries
     mutating func addIngredient (ing: String) {
-        self.ingQueries.append(Ingredient(name: ing))
+        //ing = ing.lowercased()
+        self.ingQueries.append(Ingredient(name: ing.lowercased()))
     }
     
     func getDishArray () -> [Dish] {
@@ -66,5 +71,39 @@ struct Query {
         return self.ingQueries
     }
     
+    mutating func editDish (index: Int, edit: String) {
+        //let target = self.dishQueries.firstIndex(of: dish)
+        self.dishQueries[index].name = edit.lowercased()
+    }
+    
+    func getDishIndex(dish: Dish) -> Int {
+        return self.dishQueries.firstIndex(of: dish)!
+    }
+    
+    func getDishName(index: Int) -> String {
+        return self.dishQueries[index].name
+    }
+    
+    mutating func removeDish(index: Int) {
+        self.dishQueries.remove(at: index)
+    }
+    
+    mutating func editIngredient(index: Int, edit: String) {
+        self.ingQueries[index].name = edit.lowercased()
+    }
+    
+    func getIngIndex(ing: Ingredient) -> Int {
+        return self.ingQueries.firstIndex(of: ing)!
+    }
+    
+    func getIngName(index: Int) -> String {
+        return self.ingQueries[index].name
+    }
+    
+    mutating func removeIng(index: Int) {
+        self.ingQueries.remove(at: index)
+        print("removal")
+        print(ingQueries)
+    }
 }
 

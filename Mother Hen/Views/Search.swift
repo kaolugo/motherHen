@@ -54,17 +54,26 @@ struct NavBar : View {
 
 
 struct DishInput : View {
-    var title: String
+    //var title: String
+    @Binding var show: Bool
+    @Binding var index: Int
+    var dish: Dish
+    //@Binding var show: Bool
+    
+    @StateObject var recipeViewModel: RecipeViewModel
     
     var body : some View {
          
         HStack {
-            Text(title)
+            Text(dish.name.lowercased())
                 .font(.custom("Montserrat", size: 20))
             Spacer()
             
             // edit button
-            Button(action: {print("implement edit function")}, label: {
+            Button(action: {
+                self.show.toggle()
+                self.index = recipeViewModel.getDishIndex(dish: dish)
+            }, label: {
                 Image(systemName: "pencil")
                     .font(.system(size: 20, weight: .black))
                     .foregroundColor(Color("slate"))
@@ -101,17 +110,24 @@ struct DishInput : View {
 }
 
 struct IngInput : View {
-    var title: String
+    @Binding var show: Bool
+    @Binding var index: Int
+    var ingredient: Ingredient
+    
+    @StateObject var recipeViewModel : RecipeViewModel
     
     var body : some View {
          
         HStack {
-            Text(title)
+            Text(ingredient.name.lowercased())
                 .font(.custom("Montserrat", size: 20))
             Spacer()
             
             // edit button
-            Button(action: {print("implement edit function")}, label: {
+            Button(action: {
+                self.show.toggle()
+                self.index = recipeViewModel.getIngIndex(ing: ingredient)
+            }, label: {
                 Image(systemName: "pencil")
                     .font(.system(size: 20, weight: .black))
                     .foregroundColor(Color("slate"))
@@ -134,8 +150,6 @@ struct IngInput : View {
                 RoundedRectangle(cornerRadius: 6.0)
                     .foregroundColor(.white))
         }
-        
-        
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
         .background(
@@ -150,7 +164,8 @@ struct IngInput : View {
 
 struct dishScroll : View {
     @StateObject var recipeViewModel: RecipeViewModel
-    
+    @Binding var showEdit : Bool
+    @Binding var index: Int
     
     var body : some View {
         ScrollView(.vertical) {
@@ -159,19 +174,22 @@ struct dishScroll : View {
                 let dishes = self.recipeViewModel.getDishArray()
                 
                 ForEach(0 ..< dishes.count, id: \.self) { dish in
-                    DishInput(title: dishes[dish].name)
+                    DishInput(show: $showEdit, index: $index, dish: dishes[dish], recipeViewModel: recipeViewModel)
                 }
  
             }
             
         }
-        .frame(width: .infinity, height: 200)
+        .frame(height: 200)
+        .frame(maxWidth: .infinity)
     }
 }
 
 
 struct ingScroll : View {
     @StateObject var recipeViewModel: RecipeViewModel
+    @Binding var showEdit : Bool
+    @Binding var index: Int
     
     var body : some View {
         ScrollView(.vertical) {
@@ -179,13 +197,14 @@ struct ingScroll : View {
                 let ingredients = self.recipeViewModel.getIngArray()
                 
                 ForEach(0 ..< ingredients.count, id: \.self) { ingredient in
-                    IngInput(title: ingredients[ingredient].name)
+                    IngInput(show: $showEdit, index: $index, ingredient: ingredients[ingredient], recipeViewModel: recipeViewModel)
                 }
  
             }
         }
         //.padding(.horizontal, 25)
-        .frame(width: .infinity, height: 220)
+        .frame(height: 220)
+        .frame(maxWidth: .infinity)
     }
 }
 
@@ -250,6 +269,12 @@ struct addIngButton : View {
 struct Search : View {
     @State private var addDish = false
     @State private var addIngredient = false
+    @State private var editDish = false
+    @State private var editDishIndex = 0
+    @State private var editIngredient = false
+    @State private var editIngIndex = 0
+    //@State private var editDish = 0
+    //@State private var editDishName = ""
     
     //@Binding var hide : Bool
     //@State var hide = true
@@ -283,7 +308,7 @@ struct Search : View {
                 Spacer()
             }
             
-            dishScroll(recipeViewModel: recipeViewModel)
+            dishScroll(recipeViewModel: recipeViewModel, showEdit: $editDish, index: $editDishIndex)
             
             addDishButton(show: $addDish)
             
@@ -299,7 +324,7 @@ struct Search : View {
                 Spacer()
             }
             
-            ingScroll(recipeViewModel: recipeViewModel)
+            ingScroll(recipeViewModel: recipeViewModel, showEdit: $editIngredient, index: $editIngIndex)
             
             addIngButton(show: $addIngredient)
             
@@ -340,9 +365,15 @@ struct Search : View {
         if addIngredient {
             addIngView(show: $addIngredient, recipeViewModel: self.recipeViewModel)
         }
-    }
-    
         
+        if editDish {
+            editDishView(index: editDishIndex, editedValue: recipeViewModel.getDishName(index: editDishIndex), show: $editDish, recipeViewModel: self.recipeViewModel)
+        }
+        
+        if editIngredient {
+            EditIngView(index: editIngIndex, editedValue: recipeViewModel.getIngName(index: editIngIndex), show: $editIngredient, recipeViewModel: self.recipeViewModel)
+        }
+    }
   }
 }
 

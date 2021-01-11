@@ -17,7 +17,7 @@ class RecipeViewModel : ObservableObject {
     
     func addDish(dish: String) {
         self.queryModel.addDish(dish: dish)
-        print(self.queryModel.dishQueries)
+        //print(self.queryModel.dishQueries)
     }
     
     func addIngredient(ing: String) {
@@ -30,5 +30,38 @@ class RecipeViewModel : ObservableObject {
     
     func getIngArray() -> Array<Ingredient> {
         return self.queryModel.getIngArray()
+    }
+    
+    func editDish(index: Int, edit: String) {
+        self.queryModel.editDish(index: index, edit: edit)
+        //print("reaached view model")
+    }
+    
+    func getDishIndex(dish: Dish) -> Int {
+        return self.queryModel.getDishIndex(dish: dish)
+    }
+    
+    func getDishName(index: Int) -> String {
+        return self.queryModel.getDishName(index: index)
+    }
+    
+    func removeDish(index: Int) {
+        self.queryModel.removeDish(index: index)
+    }
+    
+    func editIngredient(index: Int, edit: String) {
+        self.queryModel.editIngredient(index: index, edit: edit)
+    }
+    
+    func getIngIndex(ing: Ingredient) -> Int {
+        return self.queryModel.getIngIndex(ing: ing)
+    }
+    
+    func getIngName(index: Int) -> String {
+        return self.queryModel.getIngName(index: index)
+    }
+    
+    func removeIng(index: Int) {
+        self.queryModel.removeIng(index: index)
     }
 }

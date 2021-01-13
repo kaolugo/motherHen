@@ -20,9 +20,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     // Create the SwiftUI view that provides the window contents.
     let recipeViewModel = RecipeViewModel()
-    let contentView = Search(recipeViewModel: recipeViewModel)
+    //let contentView = Search(recipeViewModel: recipeViewModel)
     //let contentView = Results(recipeViewModel: recipeViewModel)
-
+    let contentView = AppContentView(recipeViewModel: recipeViewModel)
+    
+    
     // Use a UIHostingController as window root view controller.
     if let windowScene = scene as? UIWindowScene {
         let window = UIWindow(windowScene: windowScene)

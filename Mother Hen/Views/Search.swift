@@ -305,6 +305,9 @@ struct Search : View {
     //@State private var editDish = 0
     //@State private var editDishName = ""
     
+    @Binding var showSelf : Bool
+    @Binding var showOther : Bool
+    
     //@Binding var hide : Bool
     //@State var hide = true
     
@@ -362,7 +365,11 @@ struct Search : View {
             
             
             // search button
-            Button(action: {print("Implement search recipe button")}, label: {
+            Button(action: {
+                self.recipeViewModel.search()
+                self.showSelf.toggle()
+                self.showOther.toggle()
+            }, label: {
                 Text("search! ")
                     .font(.custom("Typo Round Italic Demo", size: 30))
                     .foregroundColor(Color("coffee"))
@@ -406,9 +413,12 @@ struct Search : View {
   }
 }
 
-
+/*
 struct SearchPreview : PreviewProvider {
+    @State var show : Bool = true
+    
     static var previews: some View {
-        Search(recipeViewModel: RecipeViewModel())
+        Search(showSelf: show, recipeViewModel: RecipeViewModel())
     }
 }
+*/

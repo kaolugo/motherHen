@@ -43,13 +43,157 @@ struct Query {
     // list of ingredients that the user has available
     var ingQueries: [Ingredient]
     
+    // list of API Results found
+    //var apiResult: [APIResult]
+    
+    let baseURL = "http://www.recipepuppy.com/api/?i="
+    
+    //let API = APIService()
+    
+    
+    //public typealias CompletionHandler = (([APIResult])->Void)?
+    let completion = { (result: [APIResult]) -> [APIResult] in
+        return result
+    }
     
     
     init() {
         dishQueries = []
         
         ingQueries = []
+        
+        //results = []
+        //apiResult = []
     }
+    
+    
+    
+    func generateURLS () -> [String] {
+        var urls = [String]()
+        
+        for i in 0 ..< dishQueries.count {
+            if dishQueries[i].toggle {
+                
+                var newDishURL = baseURL
+                
+                for j in 0 ..< ingQueries.count {
+                    if ingQueries[j].toggle {
+                        
+                        // for last ingredient
+                        if j == ingQueries.count - 1 {
+                            newDishURL = newDishURL + ingQueries[j].name
+                        }
+                        else {
+                            newDishURL = newDishURL + ingQueries[j].name + ","
+                        }
+                    }
+                }
+                
+                newDishURL = newDishURL + "&q=" + dishQueries[i].name
+                
+                urls.append(newDishURL)
+            }
+        }
+        
+        return urls
+    }
+    
+    
+    func search (completion: @escaping ([APIResult]) ->Void) {
+        var queries = generateURLS()
+        
+        //print(queries)
+        //let API = APIService()
+        var apiResult = [APIResult]()
+        
+        for query in queries {
+            APIService().getRecipe(searchQuery: query) { (result) in
+                switch result {
+                case .success(let results):
+                    //apiResult.append(results)
+                    //print(apiResult)
+                    //self.apiResult.append(results)
+                    
+                    DispatchQueue.main.async {
+                        //print("this is the result")
+                        //print(results)
+                        //self.apiResult.append(results)
+                        //tempResult = results
+                        //print(self.apiResult)
+                        //addAPIResult(apiResult: results)
+                        apiResult.append(results)
+                        //API.apiResults.append(results)
+                        //print(API.apiResults)
+                        //completionBlock.append
+                        //completion(API.apiResults)
+                        //completion(apiResult)
+                        completion(apiResult)
+                    }
+                    //return apiResult
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        //print(API.apiResults)
+        //return API.apiResults
+        
+    }
+    
+    
+    /*
+    mutating func search () -> [APIResult]{
+        var queries = generateURLS()
+        
+        //print(queries)
+        //let API = APIService()
+        var apiResult = [APIResult]()
+        
+        for query in queries {
+            APIService().getRecipe(searchQuery: query) { (result) in
+                switch result {
+                case .success(let results):
+                    //apiResult.append(results)
+                    //print(apiResult)
+                    //self.apiResult.append(results)
+                    
+                    DispatchQueue.main.async {
+                        //print("this is the result")
+                        //print(results)
+                        //self.apiResult.append(results)
+                        //tempResult = results
+                        //print(self.apiResult)
+                        //addAPIResult(apiResult: results)
+                        apiResult.append(results)
+                        //API.apiResults.append(results)
+                        //self.apiResult.append(results)
+                        //print(API.apiResults)
+                        //completion(API.apiResults)
+                    }
+                    
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+        
+        //print(API.apiResults)
+        print(apiResult)
+        return apiResult
+        
+    }
+ */
+    
+    
+    
+    
+    /*
+    mutating func addAPIResult (apiResult : APIResult) {
+        self.apiResult.append(apiResult)
+    }
+    */
+    
     
     // adds new dish to the list of queries
     mutating func addDish (dish: String) {
@@ -106,8 +250,8 @@ struct Query {
     
     mutating func toggleDish(index: Int) {
         self.dishQueries[index].toggle.toggle()
-        print("toggled")
-        print(dishQueries)
+        //print("toggled")
+        //print(dishQueries)
     }
     
     mutating func toggleIngredient(index: Int) {

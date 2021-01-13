@@ -10,11 +10,37 @@ import Foundation
 
 class RecipeViewModel : ObservableObject {
     @Published var queryModel: Query
+    @Published var recipeModel: SearchResults
     
     init () {
         self.queryModel = Query()
+        self.recipeModel = SearchResults()
     }
     
+    // for recipes
+    func search() {
+        //var urls = self.queryModel.generateURLS()
+        let completion = { (result: [APIResult]) -> [APIResult] in
+            return result
+        }
+        //let apiResult = self.queryModel.search(completion: completion)
+        
+        var apiResult = [APIResult]()
+        
+        self.queryModel.search() {(result) in
+            apiResult = result
+        }
+        
+        print(apiResult)
+        
+        self.recipeModel.populateRecipes(input: apiResult)
+    }
+    
+    func getRecipeArray() -> Array<Recipe> {
+        return self.recipeModel.getRecipeArray()
+    }
+    
+    // for search queries
     func addDish(dish: String) {
         self.queryModel.addDish(dish: dish)
         //print(self.queryModel.dishQueries)

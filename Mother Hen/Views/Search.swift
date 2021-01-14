@@ -9,10 +9,30 @@ import SwiftUI
 
 
 struct NavBar : View {
+    //@Binding
+    @State var showSearch : Bool
+    @State var showRecipes : Bool
+    @State var showResults : Bool
+    
     var body : some View {
         HStack {
             // search tab
-            Button(action: {print("implement switch views function")}, label: {
+            Button(action: {
+                if showRecipes {
+                    self.showRecipes.toggle()
+                }
+                
+                if !showSearch {
+                    self.showSearch.toggle()
+
+                }
+                
+                if showResults {
+                    self.showResults.toggle()
+                }
+                                
+                //self.showResults.
+            }, label: {
                 VStack {
                     Image(systemName: "magnifyingglass")
                         .font(.system(size: 30))
@@ -30,7 +50,21 @@ struct NavBar : View {
             
             
             // my recipes tab
-            Button(action: {print("implement switch views function")}, label: {
+            Button(action: {
+                if showSearch {
+                    self.showSearch.toggle()
+                }
+                
+                if !showRecipes {
+                    self.showRecipes.toggle()
+                }
+                
+                if showResults {
+                    self.showResults.toggle()
+                }
+                
+                
+            }, label: {
                 VStack {
                     Image(systemName: "book")
                         .font(.system(size: 30))
@@ -307,6 +341,7 @@ struct Search : View {
     
     @Binding var showSelf : Bool
     @Binding var showOther : Bool
+    @Binding var showRecipes : Bool
     
     //@Binding var hide : Bool
     //@State var hide = true
@@ -391,7 +426,78 @@ struct Search : View {
         
         VStack {
             Spacer()
-            NavBar()
+            //NavBar(showSearch: showSelf, showRecipes: showRecipes, showResults: showOther)
+            
+            HStack {
+                // search tab
+                Button(action: {
+                    if showRecipes {
+                        self.showRecipes.toggle()
+                    }
+                    
+                    if !showSelf {
+                        self.showSelf.toggle()
+
+                    }
+                    
+                    if showOther {
+                        self.showOther.toggle()
+                    }
+                                    
+                    //self.showResults.
+                }, label: {
+                    VStack {
+                        Image(systemName: "magnifyingglass")
+                            .font(.system(size: 30))
+                            .foregroundColor(.white)
+                        Text("search")
+                            .font(.custom("Montserrat-Regular", size: 10))
+                            .foregroundColor(.white)
+                    }
+                })
+                .padding(.leading, 80)
+                .padding(.bottom, 25)
+                .padding(.top, 5)
+                
+                Spacer()
+                
+                
+                // my recipes tab
+                Button(action: {
+                    if showSelf {
+                        self.showSelf.toggle()
+                    }
+                    
+                    if !showRecipes {
+                        self.showRecipes.toggle()
+                    }
+                    
+                    if showOther {
+                        self.showOther.toggle()
+                    }
+                    
+                    
+                }, label: {
+                    VStack {
+                        Image(systemName: "book")
+                            .font(.system(size: 30))
+                            .foregroundColor(.white)
+                        Text("my recipes")
+                            .font(.custom("Montserrat-Regular", size: 10))
+                            .foregroundColor(.white)
+                    }
+                })
+                .padding(.trailing, 80)
+                .padding(.bottom, 25)
+                .padding(.top, 5)
+            }
+            .frame(maxWidth: .infinity)
+            .background(
+                Rectangle().foregroundColor(Color("copper"))
+            )
+            .padding(.bottom, -50)
+        
+            
         }
         
         if addDish {

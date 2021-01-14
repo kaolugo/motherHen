@@ -12,28 +12,30 @@ class RecipeViewModel : ObservableObject {
     @Published var queryModel: Query
     @Published var recipeModel: SearchResults
     
+    //@Published var userRecipes = UserSettings()
+    
     init () {
         self.queryModel = Query()
         self.recipeModel = SearchResults()
     }
     
+    // update the userRecipes
+    func toggleRecipe(index: Int) {
+        self.recipeModel.toggleRecipe(index: index)
+    }
+    
     // for recipes
     func search() {
         //var urls = self.queryModel.generateURLS()
-        let completion = { (result: [APIResult]) -> [APIResult] in
+        let completion = { (result: APIResult) -> APIResult in
             return result
         }
-        //let apiResult = self.queryModel.search(completion: completion)
         
-        var apiResult = [APIResult]()
+        self.recipeModel.clearRecipes()
         
         self.queryModel.search() {(result) in
-            apiResult = result
+            self.recipeModel.populateRecipes(input: result)
         }
-        
-        print(apiResult)
-        
-        self.recipeModel.populateRecipes(input: apiResult)
     }
     
     func getRecipeArray() -> Array<Recipe> {

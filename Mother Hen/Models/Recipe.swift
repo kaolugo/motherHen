@@ -12,6 +12,8 @@ struct Recipe : Codable {
     public let title : String
     public let url : URL
     
+    var save = false
+    
     enum CodingKeys: String, CodingKey {
         case title = "title"
         case url = "href"
@@ -31,29 +33,32 @@ struct APIResult : Codable {
 
 struct SearchResults {
     var searchResults : [Recipe]
-    var rawAPIResults : [APIResult]
+    //var rawAPIResults : [APIResult]
     
     
     init() {
         searchResults = []
-        rawAPIResults = []
     }
     
-    mutating func populateRecipes(input : [APIResult]) {
+    mutating func clearRecipes() {
+        searchResults.removeAll()
+    }
+    
+    
+    mutating func populateRecipes(input: APIResult) {
         
-        rawAPIResults = input
-        
-        for i in 0 ..< rawAPIResults.count {
-            for j in 0 ..< rawAPIResults[i].results.count {
-                searchResults.append(rawAPIResults[i].results[j])
-            }
+        //rawAPIResults = input
+        for i in 0 ..< input.results.count {
+            searchResults.append(input.results[i])
         }
-
-        print(searchResults)
     }
     
     func getRecipeArray() -> Array<Recipe> {
         print(searchResults)
         return self.searchResults
+    }
+    
+    mutating func toggleRecipe(index: Int) {
+        searchResults[index].save.toggle()
     }
 }

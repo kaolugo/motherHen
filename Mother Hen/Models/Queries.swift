@@ -99,101 +99,26 @@ struct Query {
     }
     
     
-    func search (completion: @escaping ([APIResult]) ->Void) {
+    func search (completion: @escaping (APIResult) ->Void) {
         var queries = generateURLS()
         
         //print(queries)
         //let API = APIService()
-        var apiResult = [APIResult]()
+        //var apiResult = [APIResult]()
         
         for query in queries {
             APIService().getRecipe(searchQuery: query) { (result) in
                 switch result {
                 case .success(let results):
-                    //apiResult.append(results)
-                    //print(apiResult)
-                    //self.apiResult.append(results)
-                    
                     DispatchQueue.main.async {
-                        //print("this is the result")
-                        //print(results)
-                        //self.apiResult.append(results)
-                        //tempResult = results
-                        //print(self.apiResult)
-                        //addAPIResult(apiResult: results)
-                        apiResult.append(results)
-                        //API.apiResults.append(results)
-                        //print(API.apiResults)
-                        //completionBlock.append
-                        //completion(API.apiResults)
-                        //completion(apiResult)
-                        completion(apiResult)
+                        completion(results)
                     }
-                    //return apiResult
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
         }
-        
-        //print(API.apiResults)
-        //return API.apiResults
-        
     }
-    
-    
-    /*
-    mutating func search () -> [APIResult]{
-        var queries = generateURLS()
-        
-        //print(queries)
-        //let API = APIService()
-        var apiResult = [APIResult]()
-        
-        for query in queries {
-            APIService().getRecipe(searchQuery: query) { (result) in
-                switch result {
-                case .success(let results):
-                    //apiResult.append(results)
-                    //print(apiResult)
-                    //self.apiResult.append(results)
-                    
-                    DispatchQueue.main.async {
-                        //print("this is the result")
-                        //print(results)
-                        //self.apiResult.append(results)
-                        //tempResult = results
-                        //print(self.apiResult)
-                        //addAPIResult(apiResult: results)
-                        apiResult.append(results)
-                        //API.apiResults.append(results)
-                        //self.apiResult.append(results)
-                        //print(API.apiResults)
-                        //completion(API.apiResults)
-                    }
-                    
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            }
-        }
-        
-        //print(API.apiResults)
-        print(apiResult)
-        return apiResult
-        
-    }
- */
-    
-    
-    
-    
-    /*
-    mutating func addAPIResult (apiResult : APIResult) {
-        self.apiResult.append(apiResult)
-    }
-    */
-    
     
     // adds new dish to the list of queries
     mutating func addDish (dish: String) {

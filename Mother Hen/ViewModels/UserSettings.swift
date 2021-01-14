@@ -20,4 +20,10 @@ class UserSettings : ObservableObject {
     init () {
         self.userRecipes = UserDefaults.standard.object(forKey: "userRecipes") as? [Recipe] ?? [Recipe]()
     }
+    
+    /*
+    func getUserArray() -> [Recipe] {
+        return UserDefaults.standard.array(forKey: "userRecipes") ?? [Recipe]
+    }
+ */
 }

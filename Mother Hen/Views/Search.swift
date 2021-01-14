@@ -431,6 +431,7 @@ struct Search : View {
             HStack {
                 // search tab
                 Button(action: {
+                    self.recipeViewModel.clearRecipes()
                     if showRecipes {
                         self.showRecipes.toggle()
                     }
@@ -464,6 +465,7 @@ struct Search : View {
                 
                 // my recipes tab
                 Button(action: {
+                    self.recipeViewModel.clearRecipes()
                     if showSelf {
                         self.showSelf.toggle()
                     }

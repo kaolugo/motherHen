@@ -34,14 +34,31 @@ struct APIResult : Codable {
 struct SearchResults {
     var searchResults : [Recipe]
     //var rawAPIResults : [APIResult]
+    var saveData : [Recipe]
     
     
     init() {
         searchResults = []
+        saveData = []
+    }
+    
+    
+    func getSavedRecipes() -> [Recipe] {
+        return saveData
     }
     
     mutating func clearRecipes() {
+        saveRecipes()
         searchResults.removeAll()
+    }
+    
+    
+    mutating func saveRecipes() {
+        for i in 0 ..< searchResults.count {
+            if searchResults[i].save {
+                saveData.append(searchResults[i])
+            }
+        }
     }
     
     
@@ -60,5 +77,9 @@ struct SearchResults {
     
     mutating func toggleRecipe(index: Int) {
         searchResults[index].save.toggle()
+    }
+    
+    mutating func toggleSavedRecipe(index: Int) {
+        saveData.remove(at: index)
     }
 }

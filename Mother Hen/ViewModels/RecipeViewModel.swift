@@ -19,6 +19,21 @@ class RecipeViewModel : ObservableObject {
         self.recipeModel = SearchResults()
     }
     
+    func toggleSavedRecipe(index: Int) {
+        self.recipeModel.toggleSavedRecipe(index: index)
+    }
+    
+    
+    // func get user saved reecipes
+    func getSaveData ()-> [Recipe] {
+        self.recipeModel.getSavedRecipes()
+    }
+    
+    func clearRecipes() {
+        self.recipeModel.clearRecipes()
+    }
+    
+    
     // update the userRecipes
     func toggleRecipe(index: Int) {
         self.recipeModel.toggleRecipe(index: index)
@@ -31,7 +46,7 @@ class RecipeViewModel : ObservableObject {
             return result
         }
         
-        self.recipeModel.clearRecipes()
+        //self.recipeModel.clearRecipes()
         
         self.queryModel.search() {(result) in
             self.recipeModel.populateRecipes(input: result)

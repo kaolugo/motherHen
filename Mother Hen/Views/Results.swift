@@ -23,7 +23,7 @@ struct resultScroll : View {
                 
                 ForEach(0 ..< recipes.count, id: \.self) { recipe in
                     //RecipeResult(recipe: recipes[recipe])
-                    RecipeResult(recipe: recipes[recipe], show: $showEdit, index: $index, recipeViewModel: recipeViewModel)
+                    RecipeResult(recipe: recipes[recipe], show: $showEdit, index: recipe, recipeViewModel: recipeViewModel)
                 }
             }
         }
@@ -64,7 +64,8 @@ struct RecipeResult : View {
     var recipe: Recipe
     
     @Binding var show : Bool
-    @Binding var index : Int
+    //@Binding var index : Int
+    var index : Int
     
     @StateObject var recipeViewModel: RecipeViewModel
     
@@ -140,6 +141,7 @@ struct Results: View {
                 // back to search button
                 Button(action: {
                     //self.recipeViewModel.search()
+                    /*
                     let recipeArray = self.recipeViewModel.getRecipeArray()
                     
                     var userArray = UserDefaults.standard.array(forKey: "userRecipes")
@@ -150,7 +152,8 @@ struct Results: View {
                             userArray?.append(recipeArray[i])
                         }
                     }
-                    
+ */
+                    self.recipeViewModel.clearRecipes()
                     self.showSelf.toggle()
                     self.showOther.toggle()
                 }, label: {
@@ -178,6 +181,7 @@ struct Results: View {
                 HStack {
                     // search tab
                     Button(action: {
+                        self.recipeViewModel.clearRecipes()
                         if showRecipes {
                             self.showRecipes.toggle()
                         }
@@ -211,6 +215,7 @@ struct Results: View {
                     
                     // my recipes tab
                     Button(action: {
+                        self.recipeViewModel.clearRecipes()
                         if showOther {
                             self.showOther.toggle()
                         }

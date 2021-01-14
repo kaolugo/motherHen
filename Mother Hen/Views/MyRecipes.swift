@@ -7,21 +7,96 @@
 
 import SwiftUI
 
+
+struct ToggleSavedRecipe : View {
+    @State var didTap : Bool
+    @State var index : Int
+    
+    @StateObject var recipeViewModel : RecipeViewModel
+    //@StateObject var
+    
+    var body : some View {
+        Button(action: {
+            self.recipeViewModel.toggleSavedRecipe(index: index)
+            self.didTap.toggle()
+            
+        }, label: {
+            Image(systemName: didTap ? "heart.fill" : "heart")
+                .font(.system(size: 25, weight: .regular))
+                .foregroundColor(didTap ? Color("heart") : Color("slate"))
+        })
+        .padding(.horizontal, 10)
+        .padding(.vertical, 35)
+    }
+    
+}
+
+
+struct SavedRecipe : View {
+    var recipe: Recipe
+    
+    //@Binding var show : Bool
+    var show: Bool
+    var index: Int
+    //@Binding var index : Int
+    
+    @StateObject var recipeViewModel: RecipeViewModel
+    
+    var body : some View {
+        ZStack {
+            HStack {
+                
+                Link(recipe.title, destination: recipe.url)
+                    .frame(height: 50)
+                    .font(.custom("Montserrat-Regular", size: 20))
+                    .foregroundColor(Color("coffee"))
+                    //.padding(.vertical, )
+                
+                Spacer()
+                
+                ToggleSavedRecipe(didTap: show, index: index, recipeViewModel: recipeViewModel)
+                /*
+                Button(action: {print("implement like function")}, label: {
+                    Image(systemName: "heart")
+                        .font(.system(size: 25, weight: .regular))
+                        .foregroundColor(Color("slate"))
+                })
+ */
+            }
+            .padding(.horizontal, 10)
+            .padding(.vertical, 35)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(height: 90)
+        .background(RoundedRectangle(cornerRadius: 10.0)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 90)
+                        //.padding(.top, 10)
+        )
+    }
+}
+
+
+
+
 struct recipeScroll : View {
     @StateObject var recipeViewModel : RecipeViewModel
     
-    @Binding var showEdit : Bool
+    //@Binding var showEdit : Bool
     
-    @Binding var index : Int
+    //@Binding var index : Int
     
     var body : some View {
         ScrollView(.vertical) {
             VStack {
-                var userArray = UserDefaults.standard.array(forKey: "userRecipes")
+                //var userArray = UserDefaults.standard.array(forKey: "userRecipes")
+                var userArray = self.recipeViewModel.getSaveData()
                 
-                ForEach(0 ..< userArray!.count, id: \.self) {
+                ForEach(0 ..< userArray.count, id: \.self) {
                     recipe in
-                    RecipeResult(recipe: userArray![recipe] as! Recipe, show: $showEdit, index: $index, recipeViewModel: recipeViewModel)
+                    SavedRecipe(recipe: userArray[recipe], show: userArray[recipe].save, index: recipe, recipeViewModel: recipeViewModel)
+                    //RecipeResult(recipe: userArray[recipe], show: userArray[recipe].save, index: $index, recipeViewModel: recipeViewModel)
                 }
             }
         }
@@ -35,6 +110,9 @@ struct MyRecipes: View {
     @Binding var showRecipes : Bool
     @Binding var showSearch : Bool
     @Binding var showResults : Bool
+    
+    //@State private var showRecipe = false
+    //@State private var showRecipeIndex = 0
     
     var body : some View {
         ZStack {
@@ -52,7 +130,7 @@ struct MyRecipes: View {
                 }
                 
                 
-                //recipeScroll(recipeViewModel: recipeViewModel)
+                recipeScroll(recipeViewModel: recipeViewModel)
                 
                 Spacer()
             }
@@ -64,6 +142,7 @@ struct MyRecipes: View {
                 HStack {
                     // search tab
                     Button(action: {
+                        self.recipeViewModel.clearRecipes()
                         if showRecipes {
                             self.showRecipes.toggle()
                         }
@@ -97,6 +176,7 @@ struct MyRecipes: View {
                     
                     // my recipes tab
                     Button(action: {
+                        self.recipeViewModel.clearRecipes()
                         if showSearch {
                             self.showSearch.toggle()
                         }
